@@ -26,3 +26,8 @@ export const getPokemonDetails = async (name: string) => {
   return api.get(`pokemon/${name}`);
 };
 
+export const getPokemonEvolutionChain = async (id: number) => {
+  //retorno das especies para renderizar evoluções
+  const species = await api.get(`pokemon-species/${id}`);
+  return api.get(species.data.evolution_chain.url);
+};
