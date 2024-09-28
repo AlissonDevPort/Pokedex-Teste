@@ -6,6 +6,7 @@ import Modal from "./components/Modal/Modal.vue";
 import SearchInput from "./components/SearchInput/SearchInput.vue";
 
 const selectedPokemon = ref<string | null>(null);
+const typedPoke = ref("");
 
 const selectPokemon = (name: string) => {
   selectedPokemon.value = name;
@@ -18,10 +19,11 @@ const clearSelection = () => {
 };
 
 const isModalVisible = ref(false);
+
 </script>
 
 <template>
-  <SearchInput />
+  <SearchInput v-model="typedPoke"/>
   <Modal :isVisible="isModalVisible" @close="clearSelection">
     <PokemonDetailsVue
       :pokemonName="selectedPokemon"
