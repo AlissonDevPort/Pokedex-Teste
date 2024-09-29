@@ -24,6 +24,7 @@ const isModalVisible = ref(false);
 
 <template>
   <SearchInput v-model="typedPoke"/>
+  {{typedPoke}}
   <Modal :isVisible="isModalVisible" @close="clearSelection">
     <PokemonDetailsVue
       :pokemonName="selectedPokemon"
@@ -31,7 +32,7 @@ const isModalVisible = ref(false);
     />
   </Modal>
 
-  <PokemonListVue @selectPokemon="selectPokemon" />
+  <PokemonListVue @selectPokemon="selectPokemon" :typedPoke="typedPoke"/>
   <button v-if="selectedPokemon" @click="clearSelection">Voltar</button>
 </template>
 

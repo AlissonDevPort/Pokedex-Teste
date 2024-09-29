@@ -38,7 +38,7 @@ import { PokemonDetails, usePokemon } from "../usePokemon";
 
 export default defineComponent({
   props: {
-    pokemonName: String,
+    pokemonName: String ,
   },
   setup(props) {
     const { getPokemonInfo, getEvolutionChain } = usePokemon();

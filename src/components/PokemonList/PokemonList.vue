@@ -6,6 +6,7 @@
       class="pokemon-item"
       @click="selectPokemon(pokemon.name)"
     >
+    {{typedPoke}}
       <img :src="pokemonImage(pokemon.url)" alt="pokemon" />
       <p>{{ pokemon.name }}</p>
     </div>
@@ -20,6 +21,7 @@ import { usePokemon } from "../usePokemon";
 export default defineComponent({
   props: {
     onSelectPokemon: Function,
+    typedPoke:{ type: String, default: String }
   },
   setup(props) {
     const { pokemonList, loading, loadPokemon } = usePokemon();

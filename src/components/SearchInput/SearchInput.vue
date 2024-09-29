@@ -2,11 +2,10 @@
   <div>
     <input
       type="text"
-      :value="typedPoke"
-      @input="$emit(event.target.value)"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)" 
       placeholder="Digite o nome do Pokémon"
     />
-    {{ typedPoke }}
     <ul>
       <li v-for="poke in filteredPokeNames" :key="poke">{{ poke }}</li>
     </ul>
@@ -14,38 +13,42 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, PropType } from "vue";
 import { PokeSearch, searchPokemonByName } from "./SearchPokemon";
 
 export default defineComponent({
-  name: "App",
-  setup() {
-    // Estado para armazenar o nome digitado e os resultados filtrados
-    const typedPoke = ref("");
+  name: "SearchInput",
+  props: {
+    modelValue: {
+      type: String as PropType<string>,
+      required: true,
+    },
+  },
+  setup(props, { emit }) {
     const pokeList = ref([
       { name: "Bulbasaur" },
       { name: "Charmander" },
       { name: "Squirtle" },
-      // Adicione mais Pokémons aqui
     ]);
     const filteredPokeNames = ref<string[]>([]);
 
-    // Função chamada quando o input mudar
     const onInputChange = () => {
       const pokeSearchData: PokeSearch = {
-        typedPoke: typedPoke.value,
+        typedPoke: props.modelValue,
         pokeList: pokeList.value,
       };
 
-      // Atualiza a array com o resultado da busca
+
       filteredPokeNames.value = searchPokemonByName(pokeSearchData) || [];
     };
 
     return {
       onInputChange,
-      typedPoke,
       filteredPokeNames,
     };
+  },
+  watch: {
+    modelValue: 'onInputChange',
   },
 });
 </script>
