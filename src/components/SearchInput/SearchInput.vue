@@ -6,15 +6,16 @@
       @input="$emit('update:modelValue', $event.target.value)" 
       placeholder="Digite o nome do Pokémon"
     />
-    <ul>
+    <!-- <ul>
       <li v-for="poke in filteredPokeNames" :key="poke">{{ poke }}</li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, PropType } from "vue";
 import { PokeSearch, searchPokemonByName } from "./SearchPokemon";
+import { usePokemon } from "../usePokemon";
 
 export default defineComponent({
   name: "SearchInput",
@@ -32,18 +33,19 @@ export default defineComponent({
     ]);
     const filteredPokeNames = ref<string[]>([]);
 
-    const onInputChange = () => {
-      const pokeSearchData: PokeSearch = {
-        typedPoke: props.modelValue,
-        pokeList: pokeList.value,
-      };
+    const { pokemonList } = usePokemon();
 
+    // const onInputChange = () => {
+    //   const pokeSearchData: PokeSearch = {
+    //     typedPoke: props.modelValue,
+    //     pokeList: pokemonList.value,
+    //   };
 
-      filteredPokeNames.value = searchPokemonByName(pokeSearchData) || [];
-    };
+    //   filteredPokeNames.value = searchPokemonByName(pokeSearchData) || [];
+    // };
 
     return {
-      onInputChange,
+      //onInputChange,
       filteredPokeNames,
     };
   },

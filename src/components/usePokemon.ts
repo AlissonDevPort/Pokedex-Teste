@@ -33,7 +33,6 @@ export const usePokemon = () => {
 
   const getPokemonInfo = async (name: string) => {
       const response = await getPokemonDetails(name);
-      console.log(response)
     return response.data;
   };
   const favoritePokemon = async (name: string) => {

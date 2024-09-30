@@ -49,7 +49,7 @@ export default {
   background: rgb(128, 128, 128);
   padding: 20px;
   border-radius: 5px;
-  width: 300px;
+  width: 250px;
   text-align: center;
   position: relative;
 }

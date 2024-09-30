@@ -26,7 +26,7 @@
           :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${evo.id}.png`"
           alt="evolution"
         />
-        <p>{{ evo.name }} zzzzz</p>
+        <p>{{ evo.name }}</p>
       </div>
     </div>
   </div>
