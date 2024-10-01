@@ -10,7 +10,15 @@
       >
         <img :src="pokemonImage(pokemon.url)" alt="pokemon" />
         <p>{{ pokemon.name }}</p>
-        <p>{{ pokemonTypes[pokemon.name] || "Carregando tipos..." }}</p>
+        <div>
+          <span
+            v-for="type in pokemonTypes[pokemon.name]?.split(', ')"
+            :key="type"
+            :style="{ color: typeColors[type] || '#000', marginRight: '5px' }"
+          >
+            {{ type }}
+          </span>
+        </div>
       </div>
       <div v-if="loading">Carregando...</div>
     </div>
@@ -39,7 +47,25 @@ export default defineComponent({
     const { pokemonList, loading, loadPokemon, getPokemonInfo } = usePokemon();
     const filteredPokeNames = ref<string[]>([]);
     const pokemonTypes = reactive<{ [name: string]: string }>({});
-
+    const typeColors = {
+      water: "#3D9DD9",
+      poison: "#A55EB5",
+      fire: "#FF9C00",
+      grass: "#6BCB4A",
+      flying: "#A4C8E1",
+      rock: "#B6A77D",
+      ground: "#D18D36",
+      fighting: "#E03C31",
+      normal: "#A8A78D",
+      psychic: "#F64D8C",
+      ice: "#4FC2E8",
+      electric: "#E7C94C",
+      fairy: "#F2A6D9",
+      dragon: "#6B75D5",
+      dark: "#707070",
+      ghost: "#A4B6C6",
+      steel: "#B7B8B7",
+    };
     const pokemonImage = (url: string) => {
       const id = url.split("/").filter(Boolean).pop();
       return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
@@ -68,7 +94,6 @@ export default defineComponent({
       };
       if (props.typedPoke) {
         filteredPokeNames.value = searchPokemonByName(pokeSearchData) || [];
-        console.log(filteredPokeNames)
       } else {
         filteredPokeNames.value = pokemonList.value.map((poke) => poke.name);
       }
@@ -77,7 +102,7 @@ export default defineComponent({
     const filteredPokemonList = computed(() => {
       const byName = filteredPokeNames.value.length
         ? filteredPokeNames.value
-        : pokemonList.value.map((p) => p.name);
+        : pokemonList.value.map((poke) => poke.name);
       return filterPokemonByType().filter((pokemon) =>
         byName.includes(pokemon.name.toLowerCase())
       );
@@ -121,7 +146,6 @@ export default defineComponent({
       await loadPokemonTypes();
     });
 
-    
     watch(
       () => props.typedPoke,
       () => {
@@ -133,8 +157,7 @@ export default defineComponent({
       () => props.selectedTypeToFilter,
       async () => {
         if (props.selectedTypeToFilter.length === 0) {
-         await loadPokemon(); 
-         await loadPokemonTypes()
+          await loadPokemonTypes();
         }
       }
     );
@@ -145,6 +168,7 @@ export default defineComponent({
       selectPokemon,
       pokemonTypes,
       filteredPokemonList,
+      typeColors
     };
   },
 });

@@ -5,10 +5,9 @@
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)" 
       placeholder="Digite o nome do Pokémon"
+      :disabled="disabled"
     />
-    <!-- <ul>
-      <li v-for="poke in filteredPokeNames" :key="poke">{{ poke }}</li>
-    </ul> -->
+  
   </div>
 </template>
 
@@ -23,6 +22,10 @@ export default defineComponent({
     modelValue: {
       type: String as PropType<string>,
       required: true,
+    },
+    disabled: { 
+      type: Boolean,
+      default: false,
     },
   },
   setup(props, { emit }) {

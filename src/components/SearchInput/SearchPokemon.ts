@@ -13,9 +13,11 @@ export const searchPokemonByName = ({ typedPoke, pokeList }: PokeSearch) => {
     poke.name.toLowerCase().includes(trimmedPokeName.toLowerCase())
   );
 
-  return filteredPoke.map((pokemon) => ({
-    name: pokemon.name,
-    url: pokemon.url,
-  }));
+  return filteredPoke.map((pokemon) => pokemon.name 
+  // ({
+  //   name: pokemon.name,
+  //   url: pokemon.url,
+  // })
+);
 };
 
