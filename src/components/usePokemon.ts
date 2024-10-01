@@ -23,13 +23,32 @@ export const usePokemon = () => {
   const limit = 20;
   const loading = ref(false);
 
+  // const loadPokemon = async () => {
+  //   loading.value = true;
+  //   const response = await getPokemonList(offset.value, limit);
+  //   pokemonList.value.push(...response.results);
+  //   offset.value += limit;
+  //   loading.value = false;
+  // };
+
   const loadPokemon = async () => {
+   // if (loading.value) return; 
     loading.value = true;
-    const response = await getPokemonList(offset.value, limit);
-    pokemonList.value.push(...response.results);
-    offset.value += limit;
-    loading.value = false;
+    
+    try {
+      const response = await getPokemonList(offset.value, limit);
+      const newPokemons = response.results.filter(
+        (pokemon) => !pokemonList.value.some((poke) => poke.name === pokemon.name)
+      );
+      
+      pokemonList.value.push(...newPokemons);
+      offset.value += limit;
+    } finally {
+      loading.value = false;
+    }
   };
+
+  
 
   const getPokemonInfo = async (name: string) => {
       const response = await getPokemonDetails(name);

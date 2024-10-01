@@ -7,7 +7,7 @@ import SearchInput from "./components/SearchInput/SearchInput.vue";
 import Dropdown from "./components/Dropdown/Dropdown.vue";
 
 const selectedPokemon = ref<string | null>(null);
-const selectedTypeToFilter = ref("");
+  const selectedTypeToFilter = ref<string[]>([]); // Agora é um array
 console.log(selectedTypeToFilter)
 const typedPoke = ref("");
 const typedPokeType = ref("");
@@ -40,7 +40,9 @@ const isModalVisible = ref(false);
   <PokemonListVue
    @selectPokemon="selectPokemon"
    :typedPoke="typedPoke" 
-   :selectedTypeToFilter="selectedTypeToFilter"/>
+   :selectedTypeToFilter="selectedTypeToFilter"
+   
+   />
   <button v-if="selectedPokemon" @click="clearSelection">Voltar</button>
 </template>
 

@@ -9,8 +9,8 @@ export const searchPokemonByName = ({ typedPoke, pokeList }: PokeSearch) => {
     return [];
   }
 
-  const filteredPoke = pokeList.filter((pokemon) =>
-    pokemon.name.toLowerCase().includes(trimmedPokeName.toLowerCase())
+  const filteredPoke = pokeList.filter((poke) =>
+    poke.name.toLowerCase().includes(trimmedPokeName.toLowerCase())
   );
 
   return filteredPoke.map((pokemon) => ({
