@@ -3,16 +3,15 @@
     <input
       type="text"
       :value="modelValue"
-      @input="$emit('update:modelValue', $event.target.value)" 
+      @input="$emit('update:modelValue', $event.target.value)"
       placeholder="Digite o nome do Pokémon"
       :disabled="disabled"
     />
-  
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType } from "vue";
+import { defineComponent, ref, PropType, watch } from "vue";
 import { PokeSearch, searchPokemonByName } from "./SearchPokemon";
 import { usePokemon } from "../usePokemon";
 
@@ -23,7 +22,7 @@ export default defineComponent({
       type: String as PropType<string>,
       required: true,
     },
-    disabled: { 
+    disabled: {
       type: Boolean,
       default: false,
     },
@@ -46,15 +45,17 @@ export default defineComponent({
 
     //   filteredPokeNames.value = searchPokemonByName(pokeSearchData) || [];
     // };
-
+    // watch(props.modelValue, () => {
+    //   console.log("selectedTypes", props.modelValue);
+    // });
     return {
       //onInputChange,
       filteredPokeNames,
     };
   },
-  watch: {
-    modelValue: 'onInputChange',
-  },
+  // watch: {
+  //   modelValue: "onInputChange",
+  // },
 });
 </script>
 

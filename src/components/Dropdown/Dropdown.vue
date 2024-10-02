@@ -9,7 +9,11 @@
     <button @click="addType">Adicionar</button>
 
     <div class="selected-types">
-      <div v-for="(type, index) in selectedTypes" :key="index" class="type-item">
+      <div
+        v-for="(type, index) in selectedTypes"
+        :key="index"
+        class="type-item"
+      >
         {{ type }}
         <button @click="removeType(index)">X</button>
       </div>
@@ -19,20 +23,19 @@
 
 <script lang="ts">
 import { defineComponent, ref, PropType, watch } from "vue";
-
+import { usePokemon } from "../usePokemon";
 export default defineComponent({
   name: "Dropdown",
   props: {
     modelValue: {
-      type: Array as PropType<string[]>, 
+      type: Array as PropType<string[]>,
       required: true,
     },
   },
   setup(props, { emit }) {
-  
     const selectedTypeToAdd = ref<string>("");
+    const { loading, loadPokemon } = usePokemon();
 
- 
     const pokemonTypesToFilter = ref<string[]>([
       "water",
       "poison",
@@ -61,14 +64,14 @@ export default defineComponent({
         !selectedTypes.value.includes(selectedTypeToAdd.value)
       ) {
         selectedTypes.value.push(selectedTypeToAdd.value);
-        emit("update:modelValue", selectedTypes.value); 
-        selectedTypeToAdd.value = ""; 
+        emit("update:modelValue", selectedTypes.value);
+        selectedTypeToAdd.value = "";
       }
     };
 
     const removeType = (index: number) => {
       selectedTypes.value.splice(index, 1);
-      emit("update:modelValue", selectedTypes.value); 
+      emit("update:modelValue", selectedTypes.value);
     };
     watch(
       () => props.modelValue,
@@ -76,8 +79,12 @@ export default defineComponent({
         selectedTypes.value = [...newVal];
       }
     );
-
+    // watch(selectedTypes, (newVal, oldVal) => {
+    //   console.log("selectedTypes mudou de:", oldVal, "para:", newVal);
+    //   loadNewWithTypes(); // Chama a função sempre que selectedTypes mudar
+    // });
     return {
+      loading,
       selectedTypeToAdd,
       pokemonTypesToFilter,
       selectedTypes,
@@ -96,7 +103,7 @@ export default defineComponent({
 }
 
 .type-item {
-  background-color: #e0e0e0;
+  background-color: #858585;
   padding: 5px 10px;
   margin-right: 5px;
   margin-bottom: 5px;

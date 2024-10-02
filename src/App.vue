@@ -8,9 +8,7 @@ import Dropdown from "./components/Dropdown/Dropdown.vue";
 
 const selectedPokemon = ref<string | null>(null);
 const selectedTypeToFilter = ref<string[]>([]);
-console.log(selectedTypeToFilter);
 const typedPoke = ref("");
-const typedPokeType = ref("");
 
 const selectPokemon = (name: string) => {
   selectedPokemon.value = name;
@@ -21,36 +19,46 @@ const clearSelection = () => {
   selectedPokemon.value = null;
   isModalVisible.value = false;
 };
-const isSearchInputDisabled = computed(() => selectedTypeToFilter.value.length >= 1);
+
+const isSearchInputDisabled = computed(
+  () => selectedTypeToFilter.value.length >= 1
+);
 
 const clearSearchInput = () => {
   typedPoke.value = "";
 };
+
 watch(selectedTypeToFilter, (newValue) => {
   if (newValue.length > 0) {
-    clearSearchInput(); 
+    clearSearchInput();
   }
 });
 const isModalVisible = ref(false);
 </script>
 
 <template>
-   <SearchInput v-model="typedPoke" :disabled="isSearchInputDisabled" />
-  <Dropdown v-model="selectedTypeToFilter" />
-  {{ typedPokeType }}
-  <Modal :isVisible="isModalVisible" @close="clearSelection">
-    <PokemonDetailsVue
-      :pokemonName="selectedPokemon"
-      @clearSelection="clearSelection"
+  <div id="app" :class="{ 'no-hover': isModalVisible }">
+    <SearchInput v-model="typedPoke" :disabled="isSearchInputDisabled" />
+    <Dropdown v-model="selectedTypeToFilter" />
+    <Modal :isVisible="isModalVisible" @close="clearSelection">
+      <PokemonDetailsVue
+        :pokemonName="selectedPokemon"
+        @clearSelection="clearSelection"
+      />
+    </Modal>
+    <PokemonListVue
+      :isModalVisible="isModalVisible"
+      @selectPokemon="selectPokemon"
+      :typedPoke="typedPoke"
+      :selectedTypeToFilter="selectedTypeToFilter"
     />
-  </Modal>
-
-  <PokemonListVue
-    @selectPokemon="selectPokemon"
-    :typedPoke="typedPoke"
-    :selectedTypeToFilter="selectedTypeToFilter"
-  />
-  <button v-if="selectedPokemon" @click="clearSelection">Voltar</button>
+    <button v-if="selectedPokemon" @click="clearSelection">Voltar</button>
+  </div>
 </template>
 
-<style scoped></style>
+<style>
+.no-hover .pokemon-item:hover {
+  transform: none;
+  box-shadow: none;
+}
+</style>

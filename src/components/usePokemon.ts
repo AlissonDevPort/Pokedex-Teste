@@ -20,7 +20,7 @@ export interface PokemonDetails {
 export const usePokemon = () => {
   const pokemonList = ref<Pokemon[]>([]);
   const offset = ref(0);
-  const limit = 20;
+  const limit = 25;
   const loading = ref(false);
 
   // const loadPokemon = async () => {
@@ -32,37 +32,38 @@ export const usePokemon = () => {
   // };
 
   const loadPokemon = async () => {
-   // if (loading.value) return; 
+    if (loading.value) {
+      return;
+    }
     loading.value = true;
-    
+
     try {
       const response = await getPokemonList(offset.value, limit);
       const newPokemons = response.results.filter(
-        (pokemon) => !pokemonList.value.some((poke) => poke.name === pokemon.name)
+        (pokemon) =>
+          !pokemonList.value.some((poke) => poke.name === pokemon.name)
       );
-      
+
       pokemonList.value.push(...newPokemons);
       offset.value += limit;
     } finally {
       loading.value = false;
     }
   };
-
   
 
   const getPokemonInfo = async (name: string) => {
-      const response = await getPokemonDetails(name);
+    const response = await getPokemonDetails(name);
     return response.data;
   };
   const favoritePokemon = async (name: string) => {
-      // selecionar melhor maneira para adicionar o poke a lista de fav
+    // selecionar melhor maneira para adicionar o poke a lista de fav
   };
 
   const getEvolutionChain = async (id: number) => {
     const response = await getPokemonEvolutionChain(id);
     return response.data;
   };
-
 
   onMounted(loadPokemon);
 
