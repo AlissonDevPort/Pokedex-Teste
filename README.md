@@ -1,5 +1,20 @@
-# Vue 3 + TypeScript + Vite
+# Pokedex - Vue 3 + TypeScript + Vite
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+Este projeto é uma Pokedex construída com Vue 3, TypeScript e Vite. A aplicação permite a listagem de Pokémon, visualização de detalhes de cada um e a funcionalidade de adicionar e remover Pokémon aos seus favoritos.
+
+# Funcionalidades
+Listagem de Pokémon: Exibe todos os Pokémon disponíveis com scroll infinito.
+Busca por nome: Filtre os Pokémon pelo nome.
+Filtros por tipo: Filtre Pokémon por seus tipos (água, fogo, grama, etc.).
+Favoritar Pokémon: Adicione ou remova Pokémon dos seus favoritos.
+Detalhes de Pokémon: Veja informações detalhadas de cada Pokémon, como tipos, habilidades e imagem.
+
+# Pré-requisitos
+Certifique-se de ter o Node.js instalado em sua máquina. Este projeto foi criado usando:
+Node
+Vite para o ambiente de desenvolvimento
+Vitest para os testes
+
+# Executando projeto
+Para iniciar o servidor de desenvolvimento, execute: npm run dev e para iniciar o teste npx vitest run

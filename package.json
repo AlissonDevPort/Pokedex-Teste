@@ -21,14 +21,11 @@
   "devDependencies": {
     "@types/jest": "^29.5.13",
     "@vitejs/plugin-vue": "^5.1.2",
-    "@vue/cli-plugin-unit-jest": "^5.0.8",
     "@vue/test-utils": "^2.4.6",
-    "babel-jest": "^27.5.1",
     "jest": "^27.5.1",
-    "jest-mock": "^29.7.0",
     "typescript": "^5.5.3",
     "vite": "^5.4.1",
-    "vue-tsc": "^2.0.29",
-    "vue3-jest": "^27.0.0-alpha.1"
+    "vitest": "^2.1.2",
+    "vue-tsc": "^2.0.29"
   }
 }
