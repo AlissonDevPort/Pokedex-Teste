@@ -7,7 +7,7 @@ import SearchInput from "./components/SearchInput/SearchInput.vue";
 import Dropdown from "./components/Dropdown/Dropdown.vue";
 import { ToastifyContainer } from "vue3-toastify";
 
-const selectedPokemon = ref<string | null>(null);
+const selectedPokemon = ref<string | undefined>(undefined);
 const selectedTypeToFilter = ref<string[]>([]);
 const typedPoke = ref("");
 
@@ -17,7 +17,7 @@ const selectPokemon = (name: string) => {
 };
 
 const clearSelection = () => {
-  selectedPokemon.value = null;
+  selectedPokemon.value = undefined;
   isModalVisible.value = false;
 };
 
