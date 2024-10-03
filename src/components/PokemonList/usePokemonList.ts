@@ -1,11 +1,11 @@
 import { reactive, ref, computed, onMounted, watch } from "vue";
 import { usePokemon } from "../usePokemon";
 
-export function usePokemonList(props) {
+export function usePokemonList(props: any) {
   const { pokemonList, loading, loadPokemon } = usePokemon();
   const filteredPokeNames = ref<string[]>([]);
   const pokemonTypes = reactive<{ [name: string]: string }>({});
-  const typeColors = {
+  const typeColors :Record<string, string> = {
     water: "#3D9DD9",
     poison: "#A55EB5",
     fire: "#FF9C00",
@@ -57,7 +57,7 @@ export function usePokemonList(props) {
     return parseInt(url.split("/").filter(Boolean).pop()!);
   };
 
-  const selectPokemon = (name: string) => {
+  const selectPokemon = (name: string, url: string) => {
     if (props.onSelectPokemon) props.onSelectPokemon(name);
   };
 
@@ -73,7 +73,7 @@ export function usePokemonList(props) {
       const types = pokemonTypes[pokemon.name]?.split(", ") || [];
       return (
         props.selectedTypeToFilter.length === 0 ||
-        props.selectedTypeToFilter.some((selectedType) =>
+        props.selectedTypeToFilter.some((selectedType: any) =>
           types.includes(selectedType)
         )
       );

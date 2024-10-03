@@ -54,9 +54,10 @@ import { usePokemonDetails } from "./usePokemonDetails";
 
 export default defineComponent({
   props: {
-    pokemonName: String,
+    pokemonName: String ,
   },
   setup(props) {
+    const pokemonName = props.pokemonName ?? '';
     const {
       pokemon,
       pokemonImage,
@@ -64,7 +65,7 @@ export default defineComponent({
       typeColors,
       pokemonIdToFavorite,
       isFavorite,
-    } = usePokemonDetails(props.pokemonName);
+    } = usePokemonDetails(pokemonName);
 
     return {
       pokemon,

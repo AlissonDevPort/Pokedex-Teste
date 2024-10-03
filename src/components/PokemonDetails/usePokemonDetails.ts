@@ -9,7 +9,7 @@ export function usePokemonDetails(pokemonName: string) {
   const evolutionChain = ref<any[]>([]);
   const favoriteIds = ref<number[]>([]);
 
-  const typeColors = {
+  const typeColors:Record<string, string> = {
     water: "#3D9DD9",
     poison: "#A55EB5",
     fire: "#FF9C00",
