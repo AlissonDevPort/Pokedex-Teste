@@ -6,7 +6,7 @@
         v-for="pokemon in filteredPokemonList"
         :key="pokemon.name"
         class="pokemon-item"
-        @click="selectPokemon(pokemon.name, pokemon.url)"
+        @click="selectPokemon(pokemon.name)"
       >
         <div class="pokemon-star">
           <font-awesome-icon

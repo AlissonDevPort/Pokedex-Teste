@@ -56,9 +56,6 @@ export const usePokemon = () => {
     const response = await getPokemonDetails(name);
     return response.data;
   };
-  const favoritePokemon = async (name: string) => {
-    // selecionar melhor maneira para adicionar o poke a lista de fav
-  };
 
   const getEvolutionChain = async (id: number) => {
     const response = await getPokemonEvolutionChain(id);

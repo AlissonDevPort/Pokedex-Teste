@@ -57,7 +57,7 @@ export function usePokemonList(props: any) {
     return parseInt(url.split("/").filter(Boolean).pop()!);
   };
 
-  const selectPokemon = (name: string, url: string) => {
+  const selectPokemon = (name: string) => {
     if (props.onSelectPokemon) props.onSelectPokemon(name);
   };
 

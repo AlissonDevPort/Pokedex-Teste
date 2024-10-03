@@ -3,7 +3,7 @@
     <input
       type="text"
       :value="modelValue"
-      @input="$emit('update:modelValue', $event.target.value)"
+      @input="handleInput"
       placeholder="Digite o nome do Pokémon"
     />
   </div>
@@ -20,7 +20,12 @@ export default defineComponent({
       required: true,
     },
   },
- 
+  methods: {
+    handleInput(event: Event) {
+      const target = event.target as HTMLInputElement; 
+      this.$emit('update:modelValue', target.value); 
+    },
+  },
 });
 </script>
 
