@@ -1,12 +1,14 @@
 <template>
   <div>
-    <select v-model="selectedTypeToAdd">
-      <option value="">Selecione um tipo</option>
-      <option v-for="type in pokemonTypesToFilter" :key="type" :value="type">
-        {{ type }}
-      </option>
-    </select>
-    <button @click="addType">Adicionar</button>
+    <div class="dropdown-container">
+      <select v-model="selectedTypeToAdd" class="custom-select">
+        <option value="" disabled selected>Selecione um tipo</option>
+        <option v-for="type in pokemonTypesToFilter" :key="type" :value="type">
+          {{ type }}
+        </option>
+      </select>
+      <button @click="addType">Adicionar</button>
+    </div>
 
     <div class="selected-types">
       <div
@@ -34,7 +36,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const selectedTypeToAdd = ref<string>("");
-    const { loading, loadPokemon } = usePokemon();
+    const { loading } = usePokemon();
 
     const pokemonTypesToFilter = ref<string[]>([
       "water",
@@ -79,10 +81,6 @@ export default defineComponent({
         selectedTypes.value = [...newVal];
       }
     );
-    // watch(selectedTypes, (newVal, oldVal) => {
-    //   console.log("selectedTypes mudou de:", oldVal, "para:", newVal);
-    //   loadNewWithTypes(); // Chama a função sempre que selectedTypes mudar
-    // });
     return {
       loading,
       selectedTypeToAdd,
@@ -96,6 +94,33 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.dropdown-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.custom-select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #6d6d6d;
+  cursor: pointer;
+
+}
+
+.custom-select:focus {
+  outline: none;
+  border-color: #66afe9; 
+}
+
+.custom-select option {
+  padding: 10px; 
+  background-color: #3a3a3a; 
+}
+
 .selected-types {
   display: flex;
   flex-wrap: wrap;

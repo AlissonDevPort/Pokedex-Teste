@@ -11,14 +11,14 @@
       />
     </div>
     <img :src="pokemonImage" alt="pokemon" class="pokemon-image" />
-    <h3>Stats</h3>
+    <h4 class="pokemon-sub-info">Stats</h4>
     <ul class="pokemon-stats">
       <li v-for="stat in pokemon.stats" :key="stat.stat.name" class="stat-item">
         {{ stat.stat.name }}: {{ stat.base_stat }}
       </li>
     </ul>
 
-    <h3>Types</h3>
+    <h4 class="pokemon-sub-info">Types</h4>
     <div class="types">
       <div
         class="type-badge"
@@ -49,93 +49,22 @@
 </template>
 
 <script lang="tsx">
-import { defineComponent, ref, onMounted } from "vue";
-import { PokemonDetails, usePokemon } from "../usePokemon";
+import { defineComponent } from "vue";
+import { usePokemonDetails } from "./usePokemonDetails";
 
 export default defineComponent({
   props: {
     pokemonName: String,
   },
   setup(props) {
-    const { getPokemonInfo, getEvolutionChain } = usePokemon();
-    const pokemon = ref<PokemonDetails | null>(null);
-    const pokemonImage = ref("");
-    const evolutionChain = ref<any[]>([]);
-    const favoriteIds = ref<number[]>([]);
-    const typeColors = {
-      water: "#3D9DD9",
-      poison: "#A55EB5",
-      fire: "#FF9C00",
-      grass: "#6BCB4A",
-      flying: "#A4C8E1",
-      rock: "#B6A77D",
-      ground: "#D18D36",
-      fighting: "#E03C31",
-      normal: "#A8A78D",
-      psychic: "#F64D8C",
-      ice: "#4FC2E8",
-      electric: "#E7C94C",
-      fairy: "#F2A6D9",
-      dragon: "#6B75D5",
-      dark: "#707070",
-      ghost: "#A4B6C6",
-      steel: "#B7B8B7",
-    };
-
-    onMounted(async () => {
-      if (props.pokemonName) {
-        const pokemonData = await getPokemonInfo(props.pokemonName);
-        pokemon.value = pokemonData;
-        pokemonImage.value = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonData.id}.png`;
-
-        const evolutionData = await getEvolutionChain(pokemonData.id);
-        evolutionChain.value = extractEvolutionChain(evolutionData.chain);
-
-        favoriteIds.value = JSON.parse(
-          localStorage.getItem("pokeIdsFavorite") || "[]"
-        );
-      }
-    });
-
-    const isFavorite = () => {
-      return pokemon.value
-        ? favoriteIds.value.includes(pokemon.value.id)
-        : false;
-    };
-    const pokemonIdToFavorite = () => {
-      if (pokemon.value) {
-        const pokeId = pokemon.value.id;
-
-        if (favoriteIds.value.includes(pokeId)) {
-          favoriteIds.value = favoriteIds.value.filter((id) => id !== pokeId);
-          localStorage.setItem(
-            "pokeIdsFavorite",
-            JSON.stringify(favoriteIds.value)
-          );
-        } else {
-          favoriteIds.value.push(pokeId);
-          localStorage.setItem(
-            "pokeIdsFavorite",
-            JSON.stringify(favoriteIds.value)
-          );
-        }
-      } 
-    };
-
-    const extractEvolutionChain = (chain: any) => {
-      const evoChain = [];
-      let current = chain;
-
-      while (current) {
-        evoChain.push({
-          name: current.species.name,
-          id: current.species.url.split("/").filter(Boolean).pop(),
-        });
-        current = current.evolves_to[0];
-      }
-
-      return evoChain;
-    };
+    const {
+      pokemon,
+      pokemonImage,
+      evolutionChain,
+      typeColors,
+      pokemonIdToFavorite,
+      isFavorite,
+    } = usePokemonDetails(props.pokemonName);
 
     return {
       pokemon,
@@ -160,6 +89,9 @@ export default defineComponent({
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   max-width: 400px;
   margin: auto;
+
+  max-height: 90vh; 
+  overflow-y: auto; 
 }
 .star-icon {
   color: gold;
@@ -190,13 +122,33 @@ export default defineComponent({
   list-style: none;
   padding: 0;
   margin: 0.5rem 0;
+  gap: 10px; 
 }
 
 .stat-item {
-  width: 50%;
+  width: calc(50% - 10px); 
   box-sizing: border-box;
   padding: 0.5rem;
   text-align: center;
+  background-color: #555; 
+  border-radius: 8px;
+
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+}
+
+.pokemon-info::-webkit-scrollbar {
+  width: 8px;
+}
+
+.pokemon-info::-webkit-scrollbar-thumb {
+  background-color: #888; 
+  border-radius: 10px; 
+}
+
+.pokemon-info::-webkit-scrollbar-thumb:hover {
+  background-color: #555; 
 }
 
 .types {
@@ -238,22 +190,22 @@ export default defineComponent({
   gap: 15px;
 }
 
-/* Media Queries for Responsiveness */
 @media (max-width: 600px) {
   .pokemon-info {
     max-width: 90%;
   }
 
-  .stat-item {
-    width: 100%; /* Stack stats on smaller screens */
-  }
-
   .pokemon-image {
-    width: 80px; /* Smaller image for smaller screens */
+    width: 55px;
+    margin: 0px;
   }
 
   .evolution-image {
-    width: 50px; /* Smaller evolution images */
+    width: 50px; 
+  }
+  .pokemon-sub-info{
+    margin:5px;
   }
 }
+
 </style>

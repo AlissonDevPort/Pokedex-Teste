@@ -20,7 +20,7 @@ export interface PokemonDetails {
 export const usePokemon = () => {
   const pokemonList = ref<Pokemon[]>([]);
   const offset = ref(0);
-  const limit = 25;
+  const limit = 20;
   const loading = ref(false);
 
   // const loadPokemon = async () => {
@@ -43,14 +43,14 @@ export const usePokemon = () => {
         (pokemon) =>
           !pokemonList.value.some((poke) => poke.name === pokemon.name)
       );
-
       pokemonList.value.push(...newPokemons);
       offset.value += limit;
+    } catch (error) {
+      console.error("Error", error);
     } finally {
       loading.value = false;
     }
   };
-  
 
   const getPokemonInfo = async (name: string) => {
     const response = await getPokemonDetails(name);
