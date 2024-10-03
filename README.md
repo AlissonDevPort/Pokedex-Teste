@@ -17,4 +17,5 @@ Vite para o ambiente de desenvolvimento
 Vitest para os testes
 
 # Executando projeto
-Para iniciar o servidor de desenvolvimento, execute: npm run dev e para iniciar o teste npx vitest run
+Para iniciar o servidor de desenvolvimento, execute: npm install e depois npm run dev.
+para iniciar o teste npx vitest run
